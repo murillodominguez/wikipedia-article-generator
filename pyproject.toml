@@ -1,0 +1,23 @@
+[project]
+name = "wikipedia_article_generator"
+version = "0.1.0"
+description = "wikipedia-article-generator using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "crewai[tools]>=0.118.0,<1.0.0"
+]
+
+[project.scripts]
+wikipedia_article_generator = "wikipedia_article_generator.main:run"
+run_crew = "wikipedia_article_generator.main:run"
+train = "wikipedia_article_generator.main:train"
+replay = "wikipedia_article_generator.main:replay"
+test = "wikipedia_article_generator.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
