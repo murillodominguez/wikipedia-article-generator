@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Artigos Wikipedia</title>
+</head>
+<body>
+    <h1>Wikipedia Search Tool</h1>
+    <h2>Bem-vindo ao site!</h2>
+        <label for="searchInput">Digite um tópico:</label>
+        <input type="text" id="searchInput">
+        <label for="wordsInput">Digite o número mínimo de palavras do artigo:</label>
+        <input type="number" name="" id="wordsInput">
+        <button onclick="generateArticle()">Pesquisar</button>
+        <div id="error"></div>
+    <div id="result"></div>
+    <script>
+        async function generateArticle() {
+            const searchInput = document.getElementById("searchInput");
+            const wordsInput = document.getElementById("wordsInput");
+            const topic = searchInput.value;
+            const words = wordsInput.value;
+            const resultDiv = document.getElementById("result"); 
+            const searchButton = document.getElementById("searchButton");
+            const error = document.getElementById("error");
+
+            if (!topic) {
+                error.innerHTML = "Por favor, digite um tópico!"
+                return
+            }
+            if(!words) {
+                error.innerHTML = "Por favor, digite o número de palavras!"
+                return
+            }
+            error.innerHTML = ""
+
+            try{
+                const response = await fetch(`/generate-article/?topic=${encodeURIComponent(topic)}&words=${encodeURIComponent(words)}`);
+                if(!response.ok) throw new Error("Erro ao consultar a API");
+                
+                data = await response.json();
+                resultDiv.innerHTML = `<h2>${data.title}</h2><p>${data.content}</p>`;
+            } catch (err) {
+                console.error(err);
+                resultDiv.innerHTML = "Erro ao gerar o artigo. Provavelmente algum problema na API."
+            }
+        }
+    </script>
+</body>
+</html>
