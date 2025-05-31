@@ -11,12 +11,12 @@ def generate_article(topic: str, words: str):
     result = crew.kickoff(inputs={"topic": topic, "words": words})
 
     content = str(result)
-    fake_keywords = topic.split()
+    keywords = topic.split()
 
     article = Article(
         title = topic,
         content = content,
-        key_words = fake_keywords
+        keywords = keywords
     )
 
     return article
