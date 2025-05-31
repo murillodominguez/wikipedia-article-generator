@@ -23,8 +23,8 @@ class ArticleCrew():
     @task
     def writing_task(self) -> Task:
         return Task(
-            description = "Analisar o texto feito pelo pesquisador e baseado nisso, escrever o artigo mais refletido e confiável sobre {topic}",
-            expected_output = "Um artigo completo sobre o tópico {topic}, com no mínimo {words} palavras",
+            description = "Analisar o texto feito pelo pesquisador e baseado nisso, escrever o resumo mais refletido e confiável sobre {topic}",
+            expected_output = "Um artigo resumido sobre o tópico {topic}, tem que ser um texto de no máximo {words} palavras e NÃO FORMATADO EM MARKDOWN",
             agent = self.writer
         )
 

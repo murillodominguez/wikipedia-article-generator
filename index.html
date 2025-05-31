@@ -51,7 +51,7 @@
             <div class="control-inputs">
                 <label for="searchInput">Digite um tópico:</label>
                 <input type="text" id="searchInput">
-                <label for="wordsInput">Digite o número mínimo de palavras do artigo:</label>
+                <label for="wordsInput">Digite o número máximo de palavras do artigo:</label>
                 <input type="number" name="" id="wordsInput">
                 <button onclick="generateArticle()">Gerar Artigo</button>
                 <div id="error"></div>
@@ -84,7 +84,7 @@
 
             try{
                 document.querySelector('main').appendChild(resultDiv);
-                resultDiv.innerHTML = "Carregando...";
+                resultDiv.innerHTML = "Gerando artigo...";
                 const response = await fetch(`/generate-article/?topic=${encodeURIComponent(topic)}&words=${encodeURIComponent(words)}`);
                 if(!response.ok) throw new Error("Erro ao consultar a API");
                 

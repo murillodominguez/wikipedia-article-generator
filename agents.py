@@ -20,7 +20,7 @@ class WriterAgent:
     def create(self):
         return Agent(
             role = "Escritor de Artigos sobre {topic}",
-            goal = "Escreve um resumo sobre {topic} baseado na pesquisa feita pelo agente pesquisador.",
+            goal = "Escreve um resumo de no máximo {words} palavras sobre {topic} baseado na pesquisa feita pelo agente pesquisador.",
             backstory = "Você é um escritor renomado e criativo, capaz de resumir a informação da forma mais sucinta e didática sobre {topic}. Você escreve apenas em Português Brasileiro.",
             tools = [WikipediaSearchTool(base_url="http://pt.wikipedia.org/w/api.php")],
             verbose = True,
