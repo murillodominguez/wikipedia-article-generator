@@ -4,24 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador de Artigos Wikipedia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            background-color: gray;
+            border-bottom: 2px solid black;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        main {
+            margin: 0 20px
+        }
+        .control-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        input {
+            width: 300px;
+        }
+        button {
+            width: fit-content;
+        }
+
+        #result {
+            background-color: rgb(223, 223, 223);
+            border-radius: 5px;
+            border: 1px solid black;
+            padding: 10px 20px;
+            margin-bottom: 15px;
+        }
+        #result p {
+            text-align: justify;
+        }
+    </style>
 </head>
 <body>
     <h1>Wikipedia Search Tool</h1>
-    <h2>Bem-vindo ao site!</h2>
-        <label for="searchInput">Digite um tópico:</label>
-        <input type="text" id="searchInput">
-        <label for="wordsInput">Digite o número mínimo de palavras do artigo:</label>
-        <input type="number" name="" id="wordsInput">
-        <button onclick="generateArticle()">Pesquisar</button>
-        <div id="error"></div>
-    <div id="result"></div>
+    <main>
+        <h2 style="margin-bottom: 10px;">Bem-vindo ao site!</h2>
+            <div class="control-inputs">
+                <label for="searchInput">Digite um tópico:</label>
+                <input type="text" id="searchInput">
+                <label for="wordsInput">Digite o número mínimo de palavras do artigo:</label>
+                <input type="number" name="" id="wordsInput">
+                <button onclick="generateArticle()">Gerar Artigo</button>
+                <div id="error"></div>
+            </div>
+    </main>
     <script>
         async function generateArticle() {
+            const result = document.querySelector("#result");
+            if(result){
+                result.remove();    
+            }
             const searchInput = document.getElementById("searchInput");
             const wordsInput = document.getElementById("wordsInput");
             const topic = searchInput.value;
             const words = wordsInput.value;
-            const resultDiv = document.getElementById("result"); 
+            const resultDiv = document.createElement('div');
+            resultDiv.id = "result"
             const searchButton = document.getElementById("searchButton");
             const error = document.getElementById("error");
 
@@ -36,13 +83,16 @@
             error.innerHTML = ""
 
             try{
+                document.querySelector('main').appendChild(resultDiv);
+                resultDiv.innerHTML = "Carregando...";
                 const response = await fetch(`/generate-article/?topic=${encodeURIComponent(topic)}&words=${encodeURIComponent(words)}`);
                 if(!response.ok) throw new Error("Erro ao consultar a API");
                 
                 data = await response.json();
-                resultDiv.innerHTML = `<h2>${data.title}</h2><p>${data.content}</p>`;
+                resultDiv.innerHTML = `<h2 style="margin-bottom: 10px;">${data.title}</h2><p>${data.content}</p>`;
             } catch (err) {
                 console.error(err);
+                resultDiv.style = "text-align: center;";
                 resultDiv.innerHTML = "Erro ao gerar o artigo. Provavelmente algum problema na API."
             }
         }
